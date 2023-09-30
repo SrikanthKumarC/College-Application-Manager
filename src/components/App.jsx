@@ -8,7 +8,7 @@ import User from "./User";
 import { supabase } from "../utils/Supabase";
 
 export default function App() {
-  const { isLoading } = React.useContext(CollegeContext);
+  const { isLoading, secureSignOutUser } = React.useContext(CollegeContext);
   const [session, setSession] = React.useState();
 
   React.useEffect(() => {
@@ -81,7 +81,7 @@ export default function App() {
                 imageURL={session.user.user_metadata.avatar_url}
                 name={session.user.user_metadata.full_name}
                 lastLogin={session.user.last_sign_in_at}
-                singOut={singOutUser}
+                singOut={secureSignOutUser}
               />
             )}
           </>

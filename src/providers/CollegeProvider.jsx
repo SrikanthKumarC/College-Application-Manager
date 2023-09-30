@@ -7,6 +7,12 @@ const CollegeProvider = ({ children }) => {
   const [session, setSession] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
 
+  async function secureSignOutUser() {
+    setIsLoading(true);
+ const { error } = await supabase.auth.signOut();
+ fetchDataFromServer();
+ setIsLoading(false);
+  }
   async function handleDelete(id) {
     setIsLoading(true);
     const { error } = await supabase.from("collegelist").delete().eq("id", id);
@@ -112,6 +118,8 @@ const CollegeProvider = ({ children }) => {
         handleDelete,
         editCollege,
         isLoading,
+        session,
+        secureSignOutUser
       }}
     >
       {children}

@@ -1,17 +1,22 @@
 import React from "react";
 import { CollegeContext } from "../providers/CollegeProvider";
 import { TextField, Checkbox, Flex, Text, Button } from "@radix-ui/themes";
+import ErrorDialog from "../utils/ErrorDialog";
 const Form = ({ collegeId, collegeProp, feeProp, isAppliedProp }) => {
   const [college, setCollege] = React.useState(collegeProp || "");
   const [fee, setFee] = React.useState(feeProp || "");
   const [isApplied, setIsApplied] = React.useState(isAppliedProp || false);
-  const { handleSubmit, editCollege } = React.useContext(CollegeContext);
+  const { handleSubmit, editCollege, session } = React.useContext(CollegeContext);
   const BUTTON_TEXT = collegeId ? "Edit College" : "Add College";
   const uniqueId = React.useId();
+  const triggerRef = React.useRef();
+
+  console.log('session', session)
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        if (session === null) return;
         setCollege("");
         setFee("");
         setIsApplied(false);
@@ -59,9 +64,12 @@ const Form = ({ collegeId, collegeProp, feeProp, isAppliedProp }) => {
           </label>
         </Flex>
       </Text>
-      <Button mt="3" size="3" variant="surface">
+      <Button mt="3" size="3" variant="surface" ref={triggerRef}>
         {BUTTON_TEXT}
       </Button>
+        {session === null && <ErrorDialog ref={triggerRef}> 
+          <Text>Plase login to perform this action!</Text>
+        </ErrorDialog>}
     </form>
   );
 };
