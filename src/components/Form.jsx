@@ -64,7 +64,7 @@ const Form = ({ collegeId, collegeProp, feeProp, isAppliedProp }) => {
           </label>
         </Flex>
       </Text>
-      <Button mt="3" size="3" variant="surface" ref={triggerRef}>
+      <Button type={session === null ? 'button' : undefined} mt="3" size="3" variant="surface" ref={triggerRef}>
         {BUTTON_TEXT}
       </Button>
         {session === null && <ErrorDialog ref={triggerRef}> 
